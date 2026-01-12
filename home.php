@@ -105,8 +105,8 @@ body.light{
 /* LOGIN CARD */
 .container{
     width:100%;
-    max-width:420px;
-    padding:40px 35px;
+    max-width:380px;
+    padding:35px 30px;
     border-radius:22px;
     background:var(--card-dark);
     backdrop-filter:blur(14px);
@@ -116,6 +116,7 @@ body.light{
     color:#fff;
     position:relative;
 }
+
 body.light .container{
     background:var(--card-light);
     color:#111;
