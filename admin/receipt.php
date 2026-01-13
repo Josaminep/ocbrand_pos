@@ -288,35 +288,33 @@ body {
 function downloadReceipt() {
     const el = document.getElementById('receipt-container');
     const btn = document.querySelector('.save-btn');
+
+    // Hide button before capture
     btn.style.display = 'none';
 
-    // px to mm
-    const pxToMm = px => px * 0.264583;
-
-    // Use scrollHeight for full content
-    const receiptHeight = pxToMm(el.scrollHeight);
-
-    html2pdf().set({
-        margin: 0,
-        filename: '<?= $filename ?>.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: {
-            scale: 2,
-            useCORS: true,
-            scrollY: -window.scrollY, // capture full content
-            windowWidth: el.scrollWidth // ensures full width is rendered
-        },
-        jsPDF: {
-            unit: 'mm',
-            format: [80, receiptHeight], // dynamic height
-            orientation: 'portrait'
-        }
-    }).from(el).save().then(() => {
-        btn.style.display = 'block';
-    });
+    html2pdf()
+        .set({
+            margin: 0,
+            filename: '<?= $filename ?>.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: {
+                scale: 2,
+                useCORS: true
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: [80, 297], // receipt width, auto height
+                orientation: 'portrait'
+            }
+        })
+        .from(el)
+        .save()
+        .then(() => {
+            btn.style.display = 'block';
+        });
 }
-
 </script>
+
 
 
 </body>

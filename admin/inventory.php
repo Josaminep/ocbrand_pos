@@ -407,7 +407,7 @@ $image = !empty($row['image']) ? $row['image'] : 'uploads/no-image.png';
     <input type="hidden" name="id" id="eid">
     <input type="text" name="name" id="ename" required>
 
-<select name="category" id="ecat">
+<select name="category" id="edit_category">
     <?php
     $catResult = mysqli_query($conn, "SELECT name FROM categories ORDER BY name ASC");
     while ($catRow = mysqli_fetch_assoc($catResult)):
@@ -445,13 +445,14 @@ $image = !empty($row['image']) ? $row['image'] : 'uploads/no-image.png';
 function openAdd(){ addModal.style.display="flex"; }
 function closeAdd(){ addModal.style.display="none"; }
 
-function openEdit(id,n,c,s,p,q){
-    eid.value = id;
-    ename.value = n;
-    ecat.value = c;
-    esrp.value = s;
-    eprice.value = p;
-    eqty.value = q;
+function openEdit(id, n, c, s, p, q) {
+    document.getElementById('eid').value = id;
+    document.getElementById('ename').value = n;
+    document.getElementById('edit_category').value = c;
+    document.getElementById('esrp').value = s;
+    document.getElementById('eprice').value = p;
+    document.getElementById('eqty').value = q;
+
     editModal.style.display = "flex";
 }
 
