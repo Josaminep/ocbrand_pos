@@ -221,7 +221,7 @@ th, td {
 </form>
 
 <div class="report-header" style="margin-bottom: 20px;">
-    <h2><i class="fas fa-calendar-day"></i> Today's Report — <?= date("F j, Y") ?></h2>
+    <h2><i class="fas fa-calendar-day"></i> Summary — <?= date("F j, Y") ?></h2>
 </div>
 
 

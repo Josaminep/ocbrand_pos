@@ -16,6 +16,12 @@ if (!empty($search)) {
     $sql .= " AND (name LIKE '%$search%' OR brand LIKE '%$search%')";
 }
 
+$lowStock = $_GET['low_stock'] ?? '';
+
+if (!empty($lowStock)) {
+    $sql .= " AND quantity < 10";
+}
+
 $sql .= " ORDER BY id DESC";
 
 $result = mysqli_query($conn, $sql);

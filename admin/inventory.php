@@ -11,7 +11,7 @@ include "../db.php";
 $category = $_GET['category'] ?? '';
 $search   = $_GET['search'] ?? '';
 
-$sql = "SELECT * FROM products WHERE 1"; // always true to simplify query building
+$sql = "SELECT * FROM products WHERE 1";
 
 if (!empty($category)) {
     $category = mysqli_real_escape_string($conn, $category);
@@ -23,8 +23,17 @@ if (!empty($search)) {
     $sql .= " AND (name LIKE '%$search%' OR brand LIKE '%$search%')";
 }
 
+/* LOW STOCK FILTER */
+if (!empty($lowStock)) {
+    $sql .= " AND quantity < 10";
+}
+
 $sql .= " ORDER BY id DESC";
 $result = mysqli_query($conn, $sql);
+
+$lowStock = $_GET['low_stock'] ?? '';
+
+
 
 
 /* PAGE INFO */
@@ -273,26 +282,33 @@ input:focus,select:focus{
 <div class="top-bar" style="justify-content:space-between">
 
 <!-- FILTER & SEARCH -->
-<form method="GET" style="display:flex; align-items:center; gap:5px;">
-    <!-- Category Dropdown -->
-    <select name="category">
-        <option value="">All Categories</option>
+<form method="GET" style="display:flex; align-items:center; gap:8px;">
+    <select name="category" id="ecat">
         <?php
         $catResult = mysqli_query($conn, "SELECT name FROM categories ORDER BY name ASC");
         while ($catRow = mysqli_fetch_assoc($catResult)):
             $catName = $catRow['name'];
         ?>
-            <option value="<?= htmlspecialchars($catName) ?>" <?= $category === $catName ? 'selected' : '' ?>>
-                <?= htmlspecialchars($catName) ?>
-            </option>
+            <option value="<?= htmlspecialchars($catName) ?>"><?= htmlspecialchars($catName) ?></option>
         <?php endwhile; ?>
     </select>
 
-    <!-- Search Input -->
-<!-- Search Input -->
-<input type="text" id="searchInput" name="search" placeholder="Search..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+    <input type="text" id="searchInput" name="search" placeholder="Search..."
+           value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+
+<label style="display:flex; align-items:center; gap:4px; cursor:pointer; font-size:13px; white-space:nowrap;">
+    <input type="checkbox" name="low_stock" value="1"
+        <?= isset($_GET['low_stock']) ? 'checked' : '' ?>
+        style="margin:0; vertical-align:middle;">
+
+    <i class="fa-solid fa-triangle-exclamation" style="color:#dc3545; font-size:14px; line-height:1;"></i>
+    
+    <span style="line-height:1;">Low Stock</span>
+</label>
+
 
 </form>
+
 
     <div style="display: flex; gap: 10px; align-items: center;">
         <!-- Add Category Button -->
@@ -515,20 +531,26 @@ searchInput.addEventListener('input', function() {
 
 const categorySelect = document.querySelector('select[name="category"]');
 
-// Function to fetch table rows
 function updateTable() {
     const search = searchInput.value.trim();
     const category = categorySelect.value;
+    const lowStock = document.querySelector('input[name="low_stock"]')?.checked ? 1 : '';
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `functions/search_products.php?search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}`, true);
+    xhr.open(
+        'GET',
+        `functions/search_products.php?search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}&low_stock=${lowStock}`,
+        true
+    );
     xhr.onload = function() {
-        if(xhr.status === 200) {
+        if (xhr.status === 200) {
             tableBody.innerHTML = xhr.responseText;
         }
     };
     xhr.send();
 }
+
+document.querySelector('input[name="low_stock"]').addEventListener('change', updateTable);
 
 // Live search while typing
 let debounceTimer;

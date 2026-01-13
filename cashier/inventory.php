@@ -11,7 +11,7 @@ include "../db.php";
 $category = $_GET['category'] ?? '';
 $search   = $_GET['search'] ?? '';
 
-$sql = "SELECT * FROM products WHERE 1"; // always true to simplify query building
+$sql = "SELECT * FROM products WHERE 1";
 
 if (!empty($category)) {
     $category = mysqli_real_escape_string($conn, $category);
@@ -23,9 +23,15 @@ if (!empty($search)) {
     $sql .= " AND (name LIKE '%$search%' OR brand LIKE '%$search%')";
 }
 
+/* LOW STOCK FILTER */
+if (!empty($lowStock)) {
+    $sql .= " AND quantity < 10";
+}
+
 $sql .= " ORDER BY id DESC";
 $result = mysqli_query($conn, $sql);
 
+$lowStock = $_GET['low_stock'] ?? '';
 
 /* PAGE INFO */
 $currentPage = basename($_SERVER['PHP_SELF'], '.php');
@@ -292,6 +298,16 @@ input:focus,select:focus{
 <!-- Search Input -->
 <input type="text" id="searchInput" name="search" placeholder="Search..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
 
+<label style="display:flex; align-items:center; gap:4px; cursor:pointer; font-size:13px; white-space:nowrap;">
+    <input type="checkbox" name="low_stock" value="1"
+        <?= isset($_GET['low_stock']) ? 'checked' : '' ?>
+        style="margin:0; vertical-align:middle;">
+
+    <i class="fa-solid fa-triangle-exclamation" style="color:#dc3545; font-size:14px; line-height:1;"></i>
+    
+    <span style="line-height:1;">Low Stock</span>
+</label>
+
 </form>
 </div>
 
@@ -484,16 +500,23 @@ const categorySelect = document.querySelector('select[name="category"]');
 function updateTable() {
     const search = searchInput.value.trim();
     const category = categorySelect.value;
+    const lowStock = document.querySelector('input[name="low_stock"]')?.checked ? 1 : '';
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `functions/search_products.php?search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}`, true);
+    xhr.open(
+        'GET',
+        `functions/search_products.php?search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}&low_stock=${lowStock}`,
+        true
+    );
     xhr.onload = function() {
-        if(xhr.status === 200) {
+        if (xhr.status === 200) {
             tableBody.innerHTML = xhr.responseText;
         }
     };
     xhr.send();
 }
+
+document.querySelector('input[name="low_stock"]').addEventListener('change', updateTable);
 
 // Live search while typing
 let debounceTimer;
