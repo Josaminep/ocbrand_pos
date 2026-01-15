@@ -282,14 +282,18 @@ input:focus,select:focus{
 <div class="top-bar" style="justify-content:space-between">
 
 <!-- FILTER & SEARCH -->
-<form method="GET" style="display:flex; align-items:center; gap:8px;">
-    <select name="category" id="ecat">
+<form method="GET" style="display:flex; align-items:center; gap:5px;">
+    <!-- Category Dropdown -->
+    <select name="category">
+        <option value="">All Categories</option>
         <?php
         $catResult = mysqli_query($conn, "SELECT name FROM categories ORDER BY name ASC");
         while ($catRow = mysqli_fetch_assoc($catResult)):
             $catName = $catRow['name'];
         ?>
-            <option value="<?= htmlspecialchars($catName) ?>"><?= htmlspecialchars($catName) ?></option>
+            <option value="<?= htmlspecialchars($catName) ?>" <?= $category === $catName ? 'selected' : '' ?>>
+                <?= htmlspecialchars($catName) ?>
+            </option>
         <?php endwhile; ?>
     </select>
 
