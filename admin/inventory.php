@@ -315,6 +315,11 @@ input:focus,select:focus{
 
 
     <div style="display: flex; gap: 10px; align-items: center;">
+        <!-- Print Button -->
+        <button type="button" class="add-btn" onclick="printInventory()" style="background:#6c757d;">
+            <i class="fa fa-print"></i> Print
+        </button>
+
         <!-- Add Category Button -->
         <button type="button" class="add-btn" onclick="openCategoryModal()">
             <i class="fa fa-plus"></i> Add Category
