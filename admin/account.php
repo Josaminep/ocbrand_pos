@@ -317,7 +317,30 @@ document.getElementById("accountForm").addEventListener("submit", async (e) => {
         });
     }
 });
+
+const searchInput = document.getElementById("searchInput");
+const roleFilter  = document.getElementById("roleFilter");
+const rows = document.querySelectorAll("#tableBody tr");
+
+function filterTable() {
+    const search = searchInput.value.toLowerCase();
+    const role   = roleFilter.value.toLowerCase();
+
+    rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const rowRole = row.dataset.role.toLowerCase();
+
+        const matchSearch = text.includes(search);
+        const matchRole   = !role || rowRole === role;
+
+        row.style.display = (matchSearch && matchRole) ? "" : "none";
+    });
+}
+
+searchInput.addEventListener("keyup", filterTable);
+roleFilter.addEventListener("change", filterTable);
 </script>
+
 
 </body>
 </html>
