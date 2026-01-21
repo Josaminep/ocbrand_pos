@@ -316,7 +316,7 @@ input:focus,select:focus{
 
     <div style="display: flex; gap: 10px; align-items: center;">
         <!-- Print Button -->
-        <button type="button" class="add-btn" onclick="printInventory()" style="background:#6c757d;">
+        <button type="button" class="add-btn" onclick="openPrintModal()" style="background:#6c757d;">
             <i class="fa fa-print"></i> Print
         </button>
 
@@ -466,6 +466,25 @@ $image = !empty($row['image']) ? $row['image'] : 'uploads/no-image.png';
 </div>
 </div>
 
+<!-- PRINT OPTIONS MODAL -->
+<div class="modal" id="printModal">
+  <div class="modal-content">
+    <span class="close" onclick="closePrintModal()">✖</span>
+    <h3>Export Inventory</h3>
+
+    <button class="add-btn" style="width:100%;margin-bottom:10px"
+        onclick="printAsPDF()">
+        🖨 Print / Save as PDF
+    </button>
+
+    <button class="add-btn" style="width:100%;background:#007bff"
+        onclick="exportExcel()">
+        📊 Export as Excel
+    </button>
+  </div>
+</div>
+
+
 <script>
 function openAdd(){ addModal.style.display="flex"; }
 function closeAdd(){ addModal.style.display="none"; }
@@ -571,7 +590,29 @@ searchInput.addEventListener('input', function() {
 // Update table when category changes
 categorySelect.addEventListener('change', updateTable);
 
+function openPrintModal() {
+    document.getElementById('printModal').style.display = 'flex';
+}
+
+function closePrintModal() {
+    document.getElementById('printModal').style.display = 'none';
+}
+
+/* ===== PDF (Browser Print) ===== */
+function printAsPDF() {
+    closePrintModal();
+
+    const params = new URLSearchParams(window.location.search);
+    window.open('functions/inventory_print.php?' + params.toString(), '_blank');
+}
+
+/* ===== EXCEL EXPORT ===== */
+function exportExcel() {
+    const params = new URLSearchParams(window.location.search);
+    window.location.href = 'functions/inventory_excel.php?' + params.toString();
+}
 </script>
+
 
 <?php
 if (isset($_SESSION['toast'])) {
