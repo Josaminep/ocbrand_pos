@@ -256,7 +256,7 @@ $pageTitle = ucfirst(str_replace('_', ' ', $currentPage));
 
     <div class="totals">
         <div class="tot-row"><div>Subtotal</div><div id="subtotal">₱0</div></div>
-        <div class="tot-row"><div>VAT (12%)</div><div id="vatAmount">₱0</div></div>
+        <!--<div class="tot-row"><div>VAT (12%)</div><div id="vatAmount">₱0</div></div>-->
         <div class="tot-row total-big"><div>Total</div><div id="grandTotal">₱0</div></div>
 
         <!-- CASH INPUT -->
@@ -479,10 +479,10 @@ document.getElementById('cartItems').addEventListener('click',(e)=>{
 function updateTotals(){
   const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
   const vat=Math.round(subtotal*0.12);
-  const total=subtotal+vat;
+  const total=subtotal;
   grandTotalValue=total; // <-- fixed
   document.getElementById('subtotal').innerText=`₱${subtotal.toLocaleString()}`;
-  document.getElementById('vatAmount').innerText=`₱${vat.toLocaleString()}`;
+  /*document.getElementById('vatAmount').innerText=`₱${vat.toLocaleString()}*/
   document.getElementById('grandTotal').innerText=`₱${total.toLocaleString()}`;
   document.getElementById('cartCount').innerText=`${cart.reduce((s,i)=>s+i.qty,0)} items`;
   computeChange();
