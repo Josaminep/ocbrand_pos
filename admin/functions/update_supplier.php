@@ -5,19 +5,22 @@ include "../../db.php";
 /* UPDATE SUPPLIER */
 if (isset($_POST['update_supplier'])) {
 
-    $id     = (int)$_POST['id'];
-    $name   = trim($_POST['name'] ?? '');
-    $person = trim($_POST['contact_person'] ?? '');
-    $email  = trim($_POST['email'] ?? '');
-    $phone  = trim($_POST['phone'] ?? '');
-    $status = trim($_POST['status'] ?? '');
+    $id      = (int)$_POST['id'];
+    $name    = trim($_POST['name'] ?? '');
+    $product = trim($_POST['product'] ?? ''); // <-- new
+    $person  = trim($_POST['contact_person'] ?? '');
+    $email   = trim($_POST['email'] ?? '');
+    $phone   = trim($_POST['phone'] ?? '');
+    $status  = trim($_POST['status'] ?? '');
 
-    if ($name === '' || $person === '' || $phone === '') {
+    // Check required fields
+    if ($name === '' || $product === '' || $person === '' || $phone === '') {
         $_SESSION['toast'] = 'Please fill in all required fields.';
     } else {
 
         $sql = "UPDATE suppliers SET
                 name = ?,
+                product = ?, 
                 contact_person = ?,
                 email = ?,
                 phone = ?,
@@ -27,8 +30,8 @@ if (isset($_POST['update_supplier'])) {
         $stmt = mysqli_prepare($conn, $sql);
 
         if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "sssssi",
-                $name, $person, $email, $phone, $status, $id
+            mysqli_stmt_bind_param($stmt, "ssssssi",
+                $name, $product, $person, $email, $phone, $status, $id
             );
 
             if (mysqli_stmt_execute($stmt)) {

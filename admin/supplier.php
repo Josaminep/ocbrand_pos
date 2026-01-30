@@ -129,6 +129,7 @@ h1{
 <table>
 <tr>
     <th>Supplier Name</th>
+    <th>Product</th>
     <th>Contact Person</th>
     <th>Email</th>
     <th>Phone</th>
@@ -139,6 +140,7 @@ h1{
 <?php while($row=mysqli_fetch_assoc($result)): ?>
 <tr>
     <td><?= $row['name'] ?></td>
+    <td><?= $row['product'] ?></td>
     <td><?= $row['contact_person'] ?></td>
     <td><?= $row['email'] ?></td>
     <td><?= $row['phone'] ?></td>
@@ -148,14 +150,16 @@ h1{
         </span>
     </td>
     <td>
-        <button class="edit-btn" onclick="openEdit(
-            <?= $row['id'] ?>,
-            '<?= addslashes($row['name']) ?>',
-            '<?= addslashes($row['contact_person']) ?>',
-            '<?= $row['email'] ?>',
-            '<?= $row['phone'] ?>',
-            '<?= $row['status'] ?>'
-        )"><i class="fa fa-edit"></i></button>
+<button class="edit-btn" onclick="openEdit(
+    <?= $row['id'] ?>,
+    '<?= addslashes($row['name']) ?>',
+    '<?= addslashes($row['product']) ?>',
+    '<?= addslashes($row['contact_person']) ?>',
+    '<?= $row['email'] ?>',
+    '<?= $row['phone'] ?>',
+    '<?= $row['status'] ?>'
+)"><i class="fa fa-edit"></i></button>
+
 
         <form action="functions/update_supplier.php" method="POST" style="display:inline">
             <input type="hidden" name="delete_id" value="<?= $row['id'] ?>">
@@ -179,6 +183,7 @@ h1{
 
 <form action="functions/add_supplier.php" method="POST">
     <input type="text" name="name" placeholder="Supplier Name" required>
+    <input type="text" name="product" placeholder="Product" required>
     <input type="text" name="contact_person" placeholder="Contact Person" required>
     <input type="email" name="email" placeholder="Email" required>
     <input type="text" name="phone" placeholder="Phone Number" required>
@@ -200,6 +205,7 @@ h1{
 <form action="functions/update_supplier.php" method="POST">
     <input type="hidden" name="id" id="sid">
     <input type="text" name="name" id="sname" required>
+    <input type="text" name="product" id="sproduct" required>
     <input type="text" name="contact_person" id="sperson" required>
     <input type="email" name="email" id="semail" required>
     <input type="text" name="phone" id="sphone" required>
@@ -216,15 +222,17 @@ h1{
 function openAdd(){addModal.style.display="flex"}
 function closeAdd(){addModal.style.display="none"}
 
-function openEdit(id,n,p,e,ph,s){
-    sid.value=id;
-    sname.value=n;
-    sperson.value=p;
-    semail.value=e;
-    sphone.value=ph;
-    sstatus.value=s;
-    editModal.style.display="flex";
+function openEdit(id,n,prod,p,e,ph,s){
+    sid.value = id;
+    sname.value = n;
+    sproduct.value = prod;
+    sperson.value = p;
+    semail.value = e;
+    sphone.value = ph;
+    sstatus.value = s;
+    editModal.style.display = "flex";
 }
+
 function closeEdit(){editModal.style.display="none"}
 </script>
 
