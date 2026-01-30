@@ -68,9 +68,9 @@ $q = $conn->query("
         u.role,
         SUM(s.total) AS total_sales
     FROM sales s
-    JOIN accounts u ON u.id = s.admin
+    JOIN accounts u ON u.id = s.user
     WHERE s.created_at BETWEEN '$fromDate' AND '$toDate'
-    GROUP BY s.admin
+    GROUP BY s.user
 ");
 
 while ($r = $q->fetch_assoc()) {
@@ -255,7 +255,7 @@ th, td {
     <canvas id="salesChart"></canvas>
 </div>
 
-<!--<div class="section">
+<div class="section">
     <h3>👤 Sales per User</h3>
 <table>
     <tr>
@@ -271,7 +271,7 @@ th, td {
         <td>₱<?= number_format($a['total_sales'], 2) ?></td>
     </tr>
     <?php endforeach; ?>
-</table>-->
+</table>
     </div>
 </div>
 
