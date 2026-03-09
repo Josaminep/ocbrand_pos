@@ -1,0 +1,30 @@
+[02-Mar-2026 08:43:20 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'si.payment_method' in 'SELECT' in /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php:42
+Stack trace:
+#0 /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php(42): mysqli->query()
+#1 {main}
+  thrown in /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php on line 42
+[02-Mar-2026 08:43:22 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'si.payment_method' in 'SELECT' in /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php:42
+Stack trace:
+#0 /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php(42): mysqli->query()
+#1 {main}
+  thrown in /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php on line 42
+[02-Mar-2026 08:43:25 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'si.payment_method' in 'SELECT' in /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php:42
+Stack trace:
+#0 /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php(42): mysqli->query()
+#1 {main}
+  thrown in /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php on line 42
+[02-Mar-2026 08:43:28 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'si.payment_method' in 'SELECT' in /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php:42
+Stack trace:
+#0 /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php(42): mysqli->query()
+#1 {main}
+  thrown in /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php on line 42
+[02-Mar-2026 08:43:29 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'si.payment_method' in 'SELECT' in /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php:42
+Stack trace:
+#0 /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php(42): mysqli->query()
+#1 {main}
+  thrown in /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php on line 42
+[02-Mar-2026 08:43:53 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'si.payment_method' in 'SELECT' in /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php:42
+Stack trace:
+#0 /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php(42): mysqli->query()
+#1 {main}
+  thrown in /home/qffu7z6m4cwj/public_html/admin/functions/sales_report.php on line 42
